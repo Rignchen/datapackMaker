@@ -33,7 +33,7 @@ class getData():
 		"""
 		self.author = ""
 		while self.author == "":
-			input("Who's the author of this datapack? ")
+			self.author = input("Who's the author of this datapack? ")
 		return self
 def getPath(path:str):
 	return path.removesuffix(osPath.basename(path))
@@ -56,3 +56,14 @@ def make_json(path: str, content: dict):
 	make_folder(getPath(path))
 	with open(path, "w+") as f:
 		dump(content, f, indent="\t")
+
+
+def make_tree(tree: dict[str|dict[str,str]], path: str = ""):
+	for tree_element in tree:
+		new_path = osPath.join(path, tree_element)
+		content = tree[tree_element]
+		if isinstance(content, dict):
+			make_folder(new_path)
+			make_tree(content, new_path)
+		elif isinstance(content, (str, list)):
+			make_file(new_path,content)
