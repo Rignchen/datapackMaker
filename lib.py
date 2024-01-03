@@ -66,6 +66,6 @@ def make_tree(tree: dict[str|dict[str,str]], path: str = ""):
 		content = tree[tree_element]
 		if isinstance(content, dict):
 			make_folder(new_path)
-			make_(content, new_path)
+			make_tree(content, new_path)
 		elif isinstance(content, (str, list)):
 			make_file(new_path,content)
