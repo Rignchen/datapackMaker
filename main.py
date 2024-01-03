@@ -7,5 +7,4 @@ if "__pycache__" in names: names.remove("__pycache__")
 
 templateType = names[choice("Wich template do you want? ",names)]
 
-script = import_module(f"template_type.{templateType}")
-script.start()
+import_module(f"template_type.{templateType}")
