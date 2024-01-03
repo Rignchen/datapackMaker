@@ -1,5 +1,5 @@
 from json import dump
-from os import makedirs, path as osPath
+from os import makedirs, name as osName, path as osPath, system
 
 def choice(text:str, choices: list[str]):
 	"""
@@ -13,6 +13,8 @@ def choice(text:str, choices: list[str]):
 	while not (len(ans) > 0 and ans.isdigit() and 0 < int(ans) <= len(choices)):
 		ans = input(text)
 	return int(ans) -1
+def cls():
+	system("cls" if osName == 'nt' else "clear")
 class getData():
 	def __init__(self):
 		"""
@@ -64,6 +66,6 @@ def make_tree(tree: dict[str|dict[str,str]], path: str = ""):
 		content = tree[tree_element]
 		if isinstance(content, dict):
 			make_folder(new_path)
-			make_tree(content, new_path)
+			make_(content, new_path)
 		elif isinstance(content, (str, list)):
 			make_file(new_path,content)
