@@ -1,8 +1,9 @@
-from os import listdir
+from os import listdir, path
 from importlib import import_module
-from lib import choice, cls
+from lib import choice, cls, getPath
 
-names = [i.removesuffix(".py") for i in listdir("template_type")]
+names = [i.removesuffix(".py") for i in listdir(
+	path.join(getPath(__file__), "template_type"))]
 if "__pycache__" in names: names.remove("__pycache__")
 
 cls()
