@@ -1,10 +1,11 @@
 from lib import getData, make_file, make_json
 
-data = getData().getDatapackName().getNamespace().getVersion().getAuthor()
+data = getData().getDatapackName().getVersion()
+data.namespace = data.datapackName.lower().replace(" ","_")
 
 make_json(
 	f"{data.datapackName}/data/pack.mcmeta",
-	{"pack":{"pack_format": data.version,"description": f"{data.datapackName} by {data.author}"}}
+	{"pack":{"pack_format": data.version,"description": f"{data.datapackName}"}}
 )
 make_json(
 	f"{data.datapackName}/data/minecraft/tags/functions/load.json",
