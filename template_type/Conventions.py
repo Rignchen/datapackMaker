@@ -1,7 +1,6 @@
-from os import chdir, system
 from lib import getData, make_json, make_tree
 
-data = getData().getMcName().getAuthor()
+data = getData().getDatapackName().getNamespace().getVersion().getAuthor().getMcName()
 
 make_tree({
 	f"{data.datapackName}/data": {

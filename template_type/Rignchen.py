@@ -1,9 +1,9 @@
 from os import chdir, system
 from lib import getData, make_json, make_tree
 
-data = getData()
+data = getData().getDatapackName().getNamespace().getVersion()
 data.author = "Rignchen"
-data.mc_name = "Rignchen"
+data.mcName = "Rignchen"
 
 make_tree({
 	data.datapackName: {
@@ -214,7 +214,7 @@ make_json( # root.json
 )
 make_json( # author.json
 	f"data/global/advancements/{data.author.lower()}.json",
-	{"display": {"title": data.author,"description": "","icon": {"item": "minecraft:player_head","nbt": "{SkullOwner:" + data.mc_name + "}"},"show_toast": False,"announce_to_chat": False},"parent": "global:root","criteria": {"trigger": {"trigger": "minecraft:tick"}}}
+	{"display": {"title": data.author,"description": "","icon": {"item": "minecraft:player_head","nbt": "{SkullOwner:" + data.mcName + "}"},"show_toast": False,"announce_to_chat": False},"parent": "global:root","criteria": {"trigger": {"trigger": "minecraft:tick"}}}
 )
 make_json( # ns.json
 	f"data/{data.namespace}/advancements/{data.namespace}.json",

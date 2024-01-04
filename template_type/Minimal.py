@@ -1,6 +1,6 @@
 from lib import getData, make_file, make_json
 
-data = getData().getAuthor()
+data = getData().getDatapackName().getNamespace().getVersion().getAuthor()
 
 make_json(
 	f"{data.datapackName}/data/pack.mcmeta",

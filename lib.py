@@ -32,18 +32,33 @@ def cls():
 	system("cls" if osName == 'nt' else "clear")
 class getData():
 	"""
-	Ask the user for the requiered data (datapack name, namespace, version)
+	Ask the user for data requiered to make a datapack
 	"""
 	def __init__(self):
 		"""
-		Ask the user for pack name, namespace and version
+		Ask the user for data requiered to make a datapack
+		"""
+	def getDatapackName(self):
+		"""
+		Get the name of the datapack
 		"""
 		self.datapackName = askDefault("What's the name of the pack? ")
+		return self
+	def getNamespace(self):
+		"""
+		Get the namespace of the datapack
+		"""
 		self.namespace = askDefault("What's the namespace of the pack? ").lower().replace(" ","_")
+		return self
+	def getVersion(self):
+		"""
+		Get the data version
+		"""
 		version = ""
 		while not (len(version) > 0 and version.isdigit() and int(version) >= 4):
 			version = input("For wich version is it made? ")
 		self.version = int(version)
+		return self
 	def getAuthor(self):
 		"""
 		Get the name of the author
