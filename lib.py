@@ -1,6 +1,18 @@
 from json import dump
 from os import makedirs, name as osName, path as osPath, system
 
+def askDefault(text:str, default: tuple[bool, str]):
+	"""
+	Ask the user for a question, if the user doesn't answer, take the default value if there is one, otherwise ask again
+	"""
+	if default[0]: text += f"({default[1]})"
+	ans = ""
+	while ans == "":
+		ans = input(text)
+		if ans == "" and default[0]:
+			ans = default[1]
+			break
+	return ans
 def choice(text:str, choices: list[str]):
 	"""
 	Ask the user to select one of the choice, return the index of it's choice
@@ -14,59 +26,45 @@ def choice(text:str, choices: list[str]):
 		ans = input(text)
 	return int(ans) -1
 def cls():
+	"""
+	Clear the shell
+	"""
 	system("cls" if osName == 'nt' else "clear")
 class getData():
+	"""
+	Ask the user for the requiered data (datapack name, namespace, version)
+	"""
 	def __init__(self):
 		"""
 		Ask the user for pack name, namespace and version
 		"""
-		datapackName = ""
-		namespace = ""
-		version = ""
-		while datapackName == "":
-			datapackName = input("What's the name of the pack? ")
-		while namespace == "":
-			namespace = input("What's the namespace of the pack? ").lower().replace(" ","_")
-		while version == "" or not version.isdigit():
-			version = input("For wich version is it made? ")
-		self.datapackName = datapackName
-		self.namespace = namespace
-		self.version = int(version)
+		self.datapackName = askDefault("What's the name of the pack? ",(False))
+		self.namespace = askDefault("What's the namespace of the pack? ",(False)).lower().replace(" ","_")
+		self.version = int(askDefault("For wich version is it made? ",(False)))
 	def getAuthor(self):
 		"""
 		Get the name of the author
 		"""
-		txt = "Who's the author of this datapack? "
 		try:
-			txt += f"({self.mcName})"
-			default = True
+			default = (True, self.mcName)
 		except:
-			default = False
-		author = ""
-		while author == "":
-			author = input(txt)
-			if default and author == "":
-				author = self.mcName
-		self.author = author
+			default = (False)
+		self.author = askDefault("Who's the author of this datapack? ", default)
 		return self
 	def getMcName(self):
 		"""
-		Get the name of the author
+		Get the minecraft username of the author
 		"""
-		txt = "What's the minecraft username of the author? "
 		try:
-			txt += f"({self.author})"
-			default = True
+			default = (True, self.author)
 		except:
-			default = False
-		mcName = ""
-		while mcName == "":
-			mcName = input(txt)
-			if default and mcName == "":
-				mcName = self.author
-		self.mcName = mcName
+			default = (False)
+		self.mcName = askDefault("What's the minecraft username of the author? ", default)
 		return self
 def getPath(path:str):
+	"""
+	Get the path of the folder where a file is stored
+	"""
 	return path.removesuffix(osPath.basename(path))
 def make_file(path: str, content: str|list[str] = ""):
 	"""
@@ -88,6 +86,9 @@ def make_json(path: str, content: dict):
 	with open(path, "w+") as f:
 		dump(content, f, indent="\t")
 def make_tree(tree: dict[str|dict[str,str]], path: str = ""):
+	"""
+	Make the folders, subfolders and files as set in the dictionary
+	"""
 	for tree_element in tree:
 		new_path = osPath.join(path, tree_element)
 		content = tree[tree_element]
