@@ -52,9 +52,7 @@ make_tree({
 					]
 				},
 				"item_modifiers": {},
-				"loot_tables": {
-					"i": {}
-				},
+				"loot_tables/i": {},
 				"predicates": {},
 				"recipes": {},
 				"damage_type": {},
@@ -65,17 +63,11 @@ make_tree({
 					"items": {}
 				}
 			},
-			"load": {
-				"functions": {
-					"_private": {
-						"init.mcfunction": [
-							"# Reset scoreboards so packs can set values accurate for current load.",
-							"scoreboard objectives add load.status dummy",
-							"scoreboard players reset * load.status"
-						]
-					}
-				}
-			}
+			"load/functions/_private/init.mcfunction": [
+				"# Reset scoreboards so packs can set values accurate for current load.",
+				"scoreboard objectives add load.status dummy",
+				"scoreboard players reset * load.status"
+			]
 		},
 		"LICENSE": [
 			"\"Creative Commons Legal Code\",",
