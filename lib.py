@@ -36,10 +36,35 @@ class getData():
 		"""
 		Get the name of the author
 		"""
+		txt = "Who's the author of this datapack? "
+		try:
+			txt += f"({self.mcName})"
+			default = True
+		except:
+			default = False
 		author = ""
 		while author == "":
-			author = input("Who's the author of this datapack? ")
+			author = input(txt)
+			if default and author == "":
+				author = self.mcName
 		self.author = author
+		return self
+	def getMcName(self):
+		"""
+		Get the name of the author
+		"""
+		txt = "What's the minecraft username of the author? "
+		try:
+			txt += f"({self.author})"
+			default = True
+		except:
+			default = False
+		mcName = ""
+		while mcName == "":
+			mcName = input(txt)
+			if default and mcName == "":
+				mcName = self.author
+		self.mcName = mcName
 		return self
 def getPath(path:str):
 	return path.removesuffix(osPath.basename(path))
