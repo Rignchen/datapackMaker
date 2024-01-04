@@ -20,22 +20,26 @@ class getData():
 		"""
 		Ask the user for pack name, namespace and version
 		"""
-		self.datapackName = ""
-		self.namespace = ""
-		self.version = ""
-		while self.datapackName == "":
-			self.datapackName = input("What's the name of the pack? ")
-		while self.namespace == "":
-			self.namespace = input("What's the namespace of the pack? ")
-		while self.version == "" or not self.version.isdigit():
-			self.version = input("For wich version is it made? ")
+		datapackName = ""
+		namespace = ""
+		version = ""
+		while datapackName == "":
+			datapackName = input("What's the name of the pack? ")
+		while namespace == "":
+			namespace = input("What's the namespace of the pack? ")
+		while version == "" or not version.isdigit():
+			version = input("For wich version is it made? ")
+		self.datapackName = datapackName
+		self.namespace = namespace
+		self.version = int(version)
 	def getAuthor(self):
 		"""
 		Get the name of the author
 		"""
-		self.author = ""
-		while self.author == "":
-			self.author = input("Who's the author of this datapack? ")
+		author = ""
+		while author == "":
+			author = input("Who's the author of this datapack? ")
+		self.author = author
 		return self
 def getPath(path:str):
 	return path.removesuffix(osPath.basename(path))
@@ -58,8 +62,6 @@ def make_json(path: str, content: dict):
 	make_folder(getPath(path))
 	with open(path, "w+") as f:
 		dump(content, f, indent="\t")
-
-
 def make_tree(tree: dict[str|dict[str,str]], path: str = ""):
 	for tree_element in tree:
 		new_path = osPath.join(path, tree_element)

@@ -4,7 +4,7 @@ data = getData().getAuthor()
 
 make_json(
 	f"{data.datapackName}/data/pack.mcmeta",
-	{"pack":{"pack_format": int(data.version),"description": f"{data.datapackName} by {data.author}"}}
+	{"pack":{"pack_format": data.version,"description": f"{data.datapackName} by {data.author}"}}
 )
 make_json(
 	f"{data.datapackName}/data/minecraft/tags/functions/load.json",
