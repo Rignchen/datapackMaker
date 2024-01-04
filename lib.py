@@ -1,16 +1,16 @@
 from json import dump
 from os import makedirs, name as osName, path as osPath, system
 
-def askDefault(text:str, default: tuple[bool, str]):
+def askDefault(text:str, default: str|None = None):
 	"""
 	Ask the user for a question, if the user doesn't answer, take the default value if there is one, otherwise ask again
 	"""
-	if default[0]: text += f"({default[1]})"
+	if default: text += f"({default})"
 	ans = ""
 	while ans == "":
 		ans = input(text)
-		if ans == "" and default[0]:
-			ans = default[1]
+		if ans == "" and default:
+			ans = default
 			break
 	return ans
 def choice(text:str, choices: list[str]):
@@ -38,17 +38,20 @@ class getData():
 		"""
 		Ask the user for pack name, namespace and version
 		"""
-		self.datapackName = askDefault("What's the name of the pack? ",(False))
-		self.namespace = askDefault("What's the namespace of the pack? ",(False)).lower().replace(" ","_")
-		self.version = int(askDefault("For wich version is it made? ",(False)))
+		self.datapackName = askDefault("What's the name of the pack? ")
+		self.namespace = askDefault("What's the namespace of the pack? ").lower().replace(" ","_")
+		version = ""
+		while not (len(version) > 0 and version.isdigit() and int(version) >= 4):
+			version = input("For wich version is it made? ")
+		self.version = int(version)
 	def getAuthor(self):
 		"""
 		Get the name of the author
 		"""
 		try:
-			default = (True, self.mcName)
+			default = self.mcName
 		except:
-			default = (False)
+			default = None
 		self.author = askDefault("Who's the author of this datapack? ", default)
 		return self
 	def getMcName(self):
@@ -56,9 +59,9 @@ class getData():
 		Get the minecraft username of the author
 		"""
 		try:
-			default = (True, self.author)
+			default = self.author
 		except:
-			default = (False)
+			default = None
 		self.mcName = askDefault("What's the minecraft username of the author? ", default)
 		return self
 def getPath(path:str):
