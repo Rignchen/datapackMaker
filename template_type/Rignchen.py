@@ -199,7 +199,8 @@ make_tree({
 			" d. Affirmer understands and acknowledges that Creative Commons is not a",
 			"    party to this document and has no duty or obligation with respect to",
 			"    this CC0 or use of the Work"
-		]
+		],
+		".gitignore": ".vscode\n"
 	}
 })
 
@@ -249,3 +250,6 @@ make_json( # tick.json
 	f"data/minecraft/tags/functions/tick.json",
 	{"values": [f"{data.namespace}:tick"]}
 )
+
+system("git add .")
+system("git commit -m \"Create new datapack\"")
