@@ -26,7 +26,7 @@ class getData():
 		while datapackName == "":
 			datapackName = input("What's the name of the pack? ")
 		while namespace == "":
-			namespace = input("What's the namespace of the pack? ")
+			namespace = input("What's the namespace of the pack? ").lower().replace(" ","_")
 		while version == "" or not version.isdigit():
 			version = input("For wich version is it made? ")
 		self.datapackName = datapackName

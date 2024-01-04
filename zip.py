@@ -21,4 +21,4 @@ zip_name = osPath.basename(getcwd())
 
 for i in listdir():
 	if i.endswith(".zip"): remove(i)
-zip_file(["main.py","LICENSE","README.md","script"], zip_name, exclude=["__pycache__"])
+zip_file(["main.py","lib.py","template_type"], zip_name, exclude=["__pycache__"])
