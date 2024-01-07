@@ -95,7 +95,7 @@ def make_folder(path: str):
 	"""
 	Make folder and subfolders
 	"""
-	makedirs(path, exist_ok=True)
+	if path: makedirs(path, exist_ok=True)
 def make_json(path: str, content: dict):
 	"""
 	Make a json file + parents folder

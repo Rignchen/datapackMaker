@@ -17,7 +17,7 @@ make_tree({
 					"items.mcfunction": [
 						f"## function #{data.namespace}:load",
 						"",
-						f"data modify storage {data.namespace}:items" + " data set value {}",
+						'data modify storage %s:items data. set value {id:"minecraft:",Slot:16b,Count:1b,tag:{ctc: {from: "%s:%s", id: "", traits: {}},display: {Name: \'{"text": "", "italic": false}\', Lore: [\'{"text": "%s", "color": "blue"}\']}}}' % (data.namespace, data.author, data.namespace, data.namespace),
 						""
 					],
 					"load.mcfunction": [
@@ -204,7 +204,7 @@ make_json( # .vscode/settings.json
 	{"files.exclude": {"data/global":True, "data/minecraft":True, "data/load/functions": True, "data/load/tags/functions/_private": True, "LICENSE":True, "pack.mcmeta": True}}
 )
 make_json( # pack.mcmeta
-	"data/pack.mcmeta",
+	"pack.mcmeta",
 	{"pack":{"pack_format": data.version,"description": f"{data.datapackName} by {data.author}"}}
 )
 #global convention
@@ -242,6 +242,12 @@ make_json( # tick.json
 	f"data/minecraft/tags/functions/tick.json",
 	{"values": [f"{data.namespace}:tick"]}
 )
+#ns
+make_json( # loot table/i.json
+	f"data/{data.namespace}/loot_tables/i/.json",
+	{"pools": [{"rolls": 1,"entries": [{"type": "item","name": "","functions": [{"function": "copy_nbt","ops": [{"op": "merge","source": "data..tag","target": "{}"}],"source": {"type": "storage","source": f"{data.namespace}:items"}}]}]}]}
+)
 
+#commit
 system("git add .")
 system("git commit -m \"Create new datapack\"")

@@ -32,7 +32,7 @@ make_tree({
 })
 
 make_json( # pack.mcmeta
-	f"{data.datapackName}/data/pack.mcmeta",
+	f"{data.datapackName}/pack.mcmeta",
 	{"pack":{"pack_format": data.version,"description": f"{data.datapackName} by {data.author}"}}
 )
 #global convention

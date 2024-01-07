@@ -3,11 +3,7 @@ from lib import getData, make_file, make_json, make_tree
 data = getData().getDatapackName().getNamespace().getVersion().getAuthor()
 
 make_json(
-	f"{data.datapackName}/data/pack.mcmeta",
-	{"pack":{"pack_format": data.version,"description": f"{data.datapackName} by {data.author}"}}
-)
-make_json(
-	f"{data.datapackName}/data/pack.mcmeta",
+	f"{data.datapackName}/pack.mcmeta",
 	{"pack":{"pack_format": data.version,"description": f"{data.datapackName} by {data.author}"}}
 )
 make_json(

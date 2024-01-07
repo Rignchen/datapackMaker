@@ -4,7 +4,7 @@ data = getData().getDatapackName().getVersion()
 data.namespace = data.datapackName.lower().replace(" ","_")
 
 make_json(
-	f"{data.datapackName}/data/pack.mcmeta",
+	f"{data.datapackName}/pack.mcmeta",
 	{"pack":{"pack_format": data.version,"description": f"{data.datapackName}"}}
 )
 make_json(
