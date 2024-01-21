@@ -1,5 +1,4 @@
-from json import dump
-from os import makedirs, name as osName, path as osPath, system
+from os import name as osName, system
 
 def askDefault(text:str, default: str|None = None):
 	"""
@@ -25,11 +24,6 @@ def choice(text:str, choices: list[str]):
 	while not (len(ans) > 0 and ans.isdigit() and 0 < int(ans) <= len(choices)):
 		ans = input(text)
 	return int(ans) -1
-def cls():
-	"""
-	Clear the shell
-	"""
-	system("cls" if osName == 'nt' else "clear")
 class getData():
 	"""
 	Ask the user for data requiered to make a datapack
@@ -59,6 +53,21 @@ class getData():
 			mcVersion = input("For wich version is it made? ")
 		self.mcVersion = int(mcVersion)
 		return self
+	def getVersion(self):
+		"""
+		Get the version of the datapack
+		"""
+		self.version = askDefault("What's the version of the pack? ", "1.0.0")
+		if "." in self.version:
+			self.version = self.version.split(".")
+			if len(self.version) < 3:
+				self.version += ["0"] * (3 - len(self.version))
+			elif len(self.version) > 3:
+				self.version = self.version[:3]
+			self.version = "".join([v.zfill(2) for v in self.version])
+		else:
+			self.version = self.version.zfill(6)
+		return self
 	def getAuthor(self):
 		"""
 		Get the name of the author
@@ -79,39 +88,9 @@ class getData():
 			default = None
 		self.mcName = askDefault("What's the minecraft username of the author? ", default)
 		return self
-def getPath(path:str):
+
+def cls():
 	"""
-	Get the path of the folder where a file is stored
+	Clear the shell
 	"""
-	return path.removesuffix(osPath.basename(path))
-def make_file(path: str, content: str|list[str] = ""):
-	"""
-	Make a file + parents folder
-	"""
-	make_folder(getPath(path))
-	with open(path, "w+") as f:
-		f.write(content if isinstance(content, str) else '\n'.join(content))
-def make_folder(path: str):
-	"""
-	Make folder and subfolders
-	"""
-	if path: makedirs(path, exist_ok=True)
-def make_json(path: str, content: dict):
-	"""
-	Make a json file + parents folder
-	"""
-	make_folder(getPath(path))
-	with open(path, "w+") as f:
-		dump(content, f, indent="\t")
-def make_tree(tree: dict[str|dict[str,str]], path: str = ""):
-	"""
-	Make the folders, subfolders and files as set in the dictionary
-	"""
-	for tree_element in tree:
-		new_path = osPath.join(path, tree_element)
-		content = tree[tree_element]
-		if isinstance(content, dict):
-			make_folder(new_path)
-			make_tree(content, new_path)
-		elif isinstance(content, (str, list)):
-			make_file(new_path,content)
+	system("cls" if osName == 'nt' else "clear")

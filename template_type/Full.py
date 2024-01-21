@@ -1,4 +1,5 @@
-from lib import getData, make_file, make_json, make_tree
+from lib.files import make_file, make_json, make_tree
+from lib.i_o import getData
 
 data = getData().getDatapackName().getNamespace().getMcVersion().getAuthor()
 

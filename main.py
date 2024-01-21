@@ -1,6 +1,7 @@
-from os import listdir, path
 from importlib import import_module
-from lib import choice, cls, getPath
+from lib.files import getPath
+from lib.i_o import choice, cls
+from os import listdir, path
 
 names = [i.removesuffix(".py") for i in listdir(
 	path.join(getPath(__file__), "template_type"))]

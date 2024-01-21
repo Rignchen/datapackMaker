@@ -1,4 +1,5 @@
-from lib import getData, make_file, make_json
+from lib.files import make_file, make_json
+from lib.i_o import getData
 
 data = getData().getDatapackName().getMcVersion()
 data.namespace = data.datapackName.lower().replace(" ","_")
