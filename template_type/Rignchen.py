@@ -192,7 +192,12 @@ make_tree({
 			"    party to this document and has no duty or obligation with respect to",
 			"    this CC0 or use of the Work"
 		],
-		".gitignore": ".vscode\n"
+		".gitignore": ".vscode\n",
+		"zip_pack.bat": [
+			"@echo off",
+			'zip -i "pack.mcmeta", "data", "LICENSE", "README.md" -e "__pycache__"',
+			"exit /b"
+		]
 	}
 })
 
