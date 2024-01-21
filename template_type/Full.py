@@ -1,10 +1,10 @@
 from lib import getData, make_file, make_json, make_tree
 
-data = getData().getDatapackName().getNamespace().getVersion().getAuthor()
+data = getData().getDatapackName().getNamespace().getMcVersion().getAuthor()
 
 make_json(
 	f"{data.datapackName}/pack.mcmeta",
-	{"pack":{"pack_format": data.version,"description": f"{data.datapackName} by {data.author}"}}
+	{"pack":{"pack_format": data.mcVersion,"description": f"{data.datapackName} by {data.author}"}}
 )
 make_json(
 	f"{data.datapackName}/data/minecraft/tags/functions/load.json",

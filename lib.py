@@ -50,14 +50,14 @@ class getData():
 		"""
 		self.namespace = askDefault("What's the namespace of the pack? ").lower().replace(" ","_")
 		return self
-	def getVersion(self):
+	def getMcVersion(self):
 		"""
-		Get the data version
+		Get the Minecraft version
 		"""
-		version = ""
-		while not (len(version) > 0 and version.isdigit() and int(version) >= 4):
-			version = input("For wich version is it made? ")
-		self.version = int(version)
+		mcVersion = ""
+		while not (len(mcVersion) > 0 and mcVersion.isdigit() and int(mcVersion) >= 4):
+			mcVersion = input("For wich version is it made? ")
+		self.mcVersion = int(mcVersion)
 		return self
 	def getAuthor(self):
 		"""

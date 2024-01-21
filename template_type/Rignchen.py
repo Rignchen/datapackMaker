@@ -1,7 +1,7 @@
 from os import chdir, system
 from lib import getData, make_json, make_tree
 
-data = getData().getDatapackName().getNamespace().getVersion()
+data = getData().getDatapackName().getNamespace().getMcVersion()
 data.author = "Rignchen"
 data.mcName = "Rignchen"
 
@@ -210,7 +210,7 @@ make_json( # .vscode/settings.json
 )
 make_json( # pack.mcmeta
 	"pack.mcmeta",
-	{"pack":{"pack_format": data.version,"description": f"{data.datapackName} by {data.author}"}}
+	{"pack":{"pack_format": data.mcVersion,"description": f"{data.datapackName} by {data.author}"}}
 )
 #global convention
 make_json( # root.json

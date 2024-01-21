@@ -1,6 +1,6 @@
 from lib import getData, make_json, make_tree
 
-data = getData().getDatapackName().getNamespace().getVersion().getAuthor().getMcName()
+data = getData().getDatapackName().getNamespace().getMcVersion().getAuthor().getMcName()
 
 make_tree({
 	f"{data.datapackName}/data": {
@@ -33,7 +33,7 @@ make_tree({
 
 make_json( # pack.mcmeta
 	f"{data.datapackName}/pack.mcmeta",
-	{"pack":{"pack_format": data.version,"description": f"{data.datapackName} by {data.author}"}}
+	{"pack":{"pack_format": data.mcVersion,"description": f"{data.datapackName} by {data.author}"}}
 )
 #global convention
 make_json( # root.json
