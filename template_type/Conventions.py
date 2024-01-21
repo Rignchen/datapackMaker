@@ -1,9 +1,9 @@
 from lib.i_o import getData
-from lib.files import make_json, make_tree
+from lib.files import makeJson, makeTree
 
 data = getData().getDatapackName().getNamespace().getMcVersion().getAuthor().getMcName()
 
-make_tree({
+makeTree({
 	f"{data.datapackName}/data": {
 		data.namespace: {
 			"advancements": {},
@@ -32,50 +32,50 @@ make_tree({
 	}
 })
 
-make_json( # pack.mcmeta
+makeJson( # pack.mcmeta
 	f"{data.datapackName}/pack.mcmeta",
 	{"pack":{"pack_format": data.mcVersion,"description": f"{data.datapackName} by {data.author}"}}
 )
 #global convention
-make_json( # root.json
+makeJson( # root.json
 	f"{data.datapackName}/data/global/advancements/root.json",
 	{"display": {"title": "Installed Datapacks","description": "","icon": {"item": "minecraft:knowledge_book"},"background": "minecraft:textures/block/gray_concrete.png","show_toast": False,"announce_to_chat": False},"criteria": {"trigger": {"trigger": "minecraft:tick"}}}
 )
-make_json( # author.json
+makeJson( # author.json
 	f"{data.datapackName}/data/global/advancements/{data.author.lower()}.json",
 	{"display": {"title": data.author,"description": "","icon": {"item": "minecraft:player_head","nbt": "{SkullOwner:" + data.mcName + "}"},"show_toast": False,"announce_to_chat": False},"parent": "global:root","criteria": {"trigger": {"trigger": "minecraft:tick"}}}
 )
-make_json( # ns.json
+makeJson( # ns.json
 	f"{data.datapackName}/data/{data.namespace}/advancements/{data.namespace}.json",
 	{"display": {"icon": {"item": "minecraft:stone"},"title": data.datapackName,"description": "Minecraft DataPack","show_toast": False,"announce_to_chat": False},"parent": f"global:{data.author.lower()}","criteria": {"trigger": {"trigger": "minecraft:tick"}}}
 )
 #load convention
-make_json( # pre load.json
+makeJson( # pre load.json
 	f"{data.datapackName}/data/load/tags/functions/pre_load.json",
 	{"values": []}
 )
-make_json( # load.json
+makeJson( # load.json
 	f"{data.datapackName}/data/load/tags/functions/load.json",
 	{"values": [f"{data.namespace}:load"]}
 )
-make_json( # post load.json
+makeJson( # post load.json
 	f"{data.datapackName}/data/load/tags/functions/post_load.json",
 	{"values": []}
 )
-make_json( # init.json
+makeJson( # init.json
 	f"{data.datapackName}/data/load/tags/functions/_private/init.json",
 	{"values": ["load:_private/init"]}
 )
-make_json( # load.json
+makeJson( # load.json
 	f"{data.datapackName}/data/load/tags/functions/_private/load.json",
 	{"values": ["#load:_private/init",{"id": "#load:pre_load", "required": False},{"id": "#load:load", "required": False},{"id": "#load:post_load", "required": False}]}
 )
 #minecraft
-make_json( # load.json
+makeJson( # load.json
 	f"{data.datapackName}/data/minecraft/tags/functions/load.json",
 	{"values": ["#load:_private/load"]}
 )
-make_json( # tick.json
+makeJson( # tick.json
 	f"{data.datapackName}/data/minecraft/tags/functions/tick.json",
 	{"values": [f"{data.namespace}:tick"]}
 )

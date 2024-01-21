@@ -1,25 +1,25 @@
-from lib.files import make_file, make_json, make_tree
+from lib.files import makeFile, makeJson, makeTree
 from lib.i_o import getData
 
 data = getData().getDatapackName().getNamespace().getMcVersion().getAuthor()
 
-make_json(
+makeJson(
 	f"{data.datapackName}/pack.mcmeta",
 	{"pack":{"pack_format": data.mcVersion,"description": f"{data.datapackName} by {data.author}"}}
 )
-make_json(
+makeJson(
 	f"{data.datapackName}/data/minecraft/tags/functions/load.json",
 	{"values": [f"{data.namespace}:load"]}
 )
-make_json(
+makeJson(
 	f"{data.datapackName}/data/minecraft/tags/functions/tick.json",
 	{"values": [f"{data.namespace}:tick"]}
 )
-make_file(f"{data.datapackName}/data/{data.namespace}/functions/tick.mcfunction", "")
-make_file(f"{data.datapackName}/data/{data.namespace}/functions/load.mcfunction", [f"say the {data.datapackName} Datapack successfully loaded!"])
+makeFile(f"{data.datapackName}/data/{data.namespace}/functions/tick.mcfunction", "")
+makeFile(f"{data.datapackName}/data/{data.namespace}/functions/load.mcfunction", [f"say the {data.datapackName} Datapack successfully loaded!"])
 
 for ns in ["minecraft",data.namespace]:
-	make_tree({
+	makeTree({
 		"advancements": {},
 		"functions": {},
 		"item_modifiers": {},
