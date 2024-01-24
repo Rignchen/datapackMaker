@@ -1,5 +1,7 @@
 from json import dump
 from os import makedirs, path as osPath
+from lib.i_o import choice, ask
+from lib._private import getLicense, request, removeHtml
 
 def getPath(path:str):
 	"""
@@ -37,3 +39,31 @@ def makeTree(tree: dict[str|dict[str,str]], path: str = ""):
 			makeTree(content, new_path)
 		elif isinstance(content, (str, list)):
 			makeFile(new_path,content)
+def addLicense(path: str = "", content: str = None):
+	"""
+	Add a licence in the root of the project
+	"""
+	licenses = getLicense({r["name"]: r["url"] for r in request("https://api.github.com/licenses")})
+	licenseNames = [l for l in licenses.licenseList]
+
+	if content == None:
+		errorFunction = lambda x,y: x if len(x) > 0 and x[0].isalpha() else (x if x == "0" else None)
+		while True:
+			print("Choose a licence or write the content of the licence you want. Enter 0 if you don't want any license:")
+			license = choice("", licenseNames, errorFunction)
+
+			if license == "0":
+				if ask("You chose not to have a license, are you sure?"):
+					return
+			elif isinstance(license, str):
+				licenseContent = licenses.getLicense(license)
+				break
+			else:
+				licenseContent = licenses.getLicense(licenseNames[license])
+				if ask(f"You chose the {licenseContent.name} license wich is:\n {removeHtml(licenseContent.description)}\nDo you want to keep it?"):
+					break
+	# the license is imposed by the template
+	else:
+		licenseContent = licenses.getLicense(content)
+
+	makeFile(osPath.join(path, "LICENSE"), licenseContent.content)

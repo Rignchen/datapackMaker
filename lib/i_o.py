@@ -1,5 +1,15 @@
+from lib._private import correctChoiceErrorCheck
 from os import name as osName, system
 
+def ask(text:str) -> bool:
+	"""
+	Ask the user a yes or no question, return True if the answer is yes, False otherwise
+	"""
+	while True:
+		ans = input(f"{text} (y/n)").lower()
+		if ans in ["y", "yes", "n", "no"]:
+			break
+	return ans in ["y", "yes"]
 def askDefault(text:str, default: str|None = None):
 	"""
 	Ask the user for a question, if the user doesn't answer, take the default value if there is one, otherwise ask again
@@ -12,18 +22,37 @@ def askDefault(text:str, default: str|None = None):
 			ans = default
 			break
 	return ans
-def choice(text:str, choices: list[str]):
+def inputIn(text:str, choices: list[str], errorFunction: callable = lambda x,y: None) -> str:
 	"""
-	Ask the user to select one of the choice, return the index of it's choice
+	Ask the user to input a value that is in the list, return the value\n
+	If the user inputs a value that isn't in the list, call the errorFunction with arguments (the input, the list of choices)\n
+	if the errorFunction returns a value, return that value
+	"""
+	if len(choices) < 2: raise IndexError("There needs to be at least 2 options to chose")
+	while True:
+		ans = input(text)
+		if (ans in choices):
+			break
+		else:
+			error = errorFunction(ans, choices)
+			if error != None:
+				return error
+	return ans
+def choice(text:str, choices: list[str], errorFunction: callable = lambda x,y: None) -> any:
+	"""
+	Ask the user to chose between the options, return the index of the option
 	"""
 	if len(choices) == 0: raise IndexError("There needs to be at least 1 option to chose")
-	if len(choices) == 1: return 0
-	for i in range(len(choices)):
-		print(f"{i+1}) {choices[i]}")
-	ans = ""
-	while not (len(ans) > 0 and ans.isdigit() and 0 < int(ans) <= len(choices)):
-		ans = input(text)
-	return int(ans) -1
+	elif len(choices) == 1: return 0
+
+	for i, choice in enumerate(choices):
+		print(f"{i+1}. {choice}")
+
+	correctedErrorFunction = lambda x,y: correctChoiceErrorCheck(x,y,errorFunction)
+
+	ans = inputIn(text, [str(i+1) for i in range(len(choices))], correctedErrorFunction)
+
+	return int(ans) - 1 if isinstance(ans, str) else ans[0]
 class getData():
 	"""
 	Ask the user for data requiered to make a datapack

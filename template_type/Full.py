@@ -1,4 +1,4 @@
-from lib.files import makeFile, makeJson, makeTree
+from lib.files import addLicense, makeFile, makeJson, makeTree
 from lib.i_o import getData
 
 data = getData().getDatapackName().getNamespace().getMcVersion().getAuthor()
@@ -17,6 +17,8 @@ makeJson(
 )
 makeFile(f"{data.datapackName}/data/{data.namespace}/functions/tick.mcfunction", "")
 makeFile(f"{data.datapackName}/data/{data.namespace}/functions/load.mcfunction", [f"say the {data.datapackName} Datapack successfully loaded!"])
+
+addLicense()
 
 for ns in ["minecraft",data.namespace]:
 	makeTree({
