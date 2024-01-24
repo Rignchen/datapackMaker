@@ -41,7 +41,21 @@ def makeTree(tree: dict[str|dict[str,str]], path: str = ""):
 			makeFile(new_path,content)
 def addLicense(path: str = "", content: str = None):
 	"""
-	Add a licence in the root of the project
+	Add a licence in the root of the project\n
+	List of licenses available on github on 2024-01-24:
+	- GNU Affero General Public License v3.0
+	- Apache License 2.0
+	- BSD 2-Clause "Simplified" License
+	- BSD 3-Clause "New" or "Revised" License
+	- Boost Software License 1.0
+	- Creative Commons Zero v1.0 Universal
+	- Eclipse Public License 2.0
+	- GNU General Public License v2.0
+	- GNU General Public License v3.0
+	- GNU Lesser General Public License v2.1
+	- MIT License
+	- Mozilla Public License 2.0
+	- The Unlicense
 	"""
 	licenses = getLicense({r["name"]: r["url"] for r in request("https://api.github.com/licenses")})
 	licenseNames = [l for l in licenses.licenseList]
