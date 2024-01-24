@@ -31,7 +31,11 @@ try:
 			case _:
 				if len(templateName) > 0:
 					print(f"Template type chosen: {templateName}\n")
-				chosenType = choice("Wich template do you want? ", files, lambda x, y: "0" if x == "0" else None)
+				filesNames = [
+					f"\033[94m\033[1m{file}\033[0m\033[1m/\033[0m"
+					if isdir(osPath.join(path, file)) else file
+					for file in files]
+				chosenType = choice("Wich template do you want? ", filesNames, lambda x, y: "0" if x == "0" else None)
 		if isinstance(chosenType, int):
 			path = osPath.join(path, files[chosenType])
 		else:
