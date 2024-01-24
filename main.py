@@ -27,12 +27,22 @@ try:
 				print("No template found")
 				exit()
 			case 1:
-				chosenType = files[0]
+				chosenType = 0
 			case _:
 				if len(templateName) > 0:
 					print(f"Template type chosen: {templateName}\n")
-				chosenType = files[choice("Wich template do you want? ",files)]
-		path = osPath.join(path, chosenType)
+				chosenType = choice("Wich template do you want? ", files, lambda x, y: "0" if x == "0" else None)
+		if isinstance(chosenType, int):
+			path = osPath.join(path, files[chosenType])
+		else:
+			oldPath = path
+			while True:
+				if len(path) > len(defaultFolder):
+					path = osPath.dirname(path)
+				else:
+					path = oldPath
+					break
+				if len(listdir(path)) > 1: break
 
 	templateName = path.replace(f'{defaultFolder}/','',1)
 	print(f"template chosen: {templateName}\n")
