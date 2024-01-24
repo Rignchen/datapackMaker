@@ -42,6 +42,8 @@ def makeTree(tree: dict[str|dict[str,str]], path: str = ""):
 def addLicense(path: str = "", content: str = None):
 	"""
 	Add a licence in the root of the project\n
+	When the content isn't specified, the user will be asked to choose a license otherswise, the license can also be imposed by the template.\n
+	Chosing a license can wither be done by choosing it's name if it's on the github api or by writing it's content.\n
 	List of licenses available on github on 2024-01-24:
 	- GNU Affero General Public License v3.0
 	- Apache License 2.0
@@ -59,7 +61,6 @@ def addLicense(path: str = "", content: str = None):
 	"""
 	licenses = getLicense({r["name"]: r["url"] for r in request("https://api.github.com/licenses")})
 	licenseNames = [l for l in licenses.licenseList]
-
 	if content == None:
 		errorFunction = lambda x,y: x if len(x) > 0 and x[0].isalpha() else (x if x == "0" else None)
 		while True:
@@ -79,5 +80,4 @@ def addLicense(path: str = "", content: str = None):
 	# the license is imposed by the template
 	else:
 		licenseContent = licenses.getLicense(content)
-
 	makeFile(osPath.join(path, "LICENSE"), licenseContent.content)
