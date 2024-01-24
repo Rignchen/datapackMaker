@@ -1,7 +1,7 @@
 from genericpath import isdir
 from importlib import import_module
 from lib.files import getPath
-from lib.i_o import choice, cls
+from lib.i_o import choice, cls, color as color
 from os import listdir, path as osPath
 
 def removeInList(array: list, values: list):
@@ -32,7 +32,7 @@ try:
 				if len(templateName) > 0:
 					print(f"Template type chosen: {templateName}\n")
 				filesNames = [
-					f"\033[94m\033[1m{file}\033[0m\033[1m/\033[0m"
+					f"{color.blue}{color.bold}{file}{color.default}{color.bold}/{color.default}"
 					if isdir(osPath.join(path, file)) else file
 					for file in files]
 				chosenType = choice("Wich template do you want? ", filesNames, lambda x, y: "0" if x == "0" else None)

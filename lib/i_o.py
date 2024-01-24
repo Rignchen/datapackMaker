@@ -1,6 +1,7 @@
 from lib._private import correctChoiceErrorCheck
 from os import name as osName, system
 
+## Input
 def ask(text:str) -> bool:
 	"""
 	Ask the user a yes or no question, return True if the answer is yes, False otherwise
@@ -118,8 +119,22 @@ class getData():
 		self.mcName = askDefault("What's the minecraft username of the author? ", default)
 		return self
 
+## Output
 def cls():
 	"""
 	Clear the shell
 	"""
 	system("cls" if osName == 'nt' else "clear")
+class color():
+	"""
+	List of colors to add in the text to change how it looks
+	"""
+	default = '\033[0m'
+	purple = '\033[95m'
+	blue = '\033[94m'
+	cyan = '\033[96m'
+	green = '\033[92m'
+	yellow = '\033[93m'
+	red = '\033[91m'
+	bold = '\033[1m'
+	underline = '\033[4m'
