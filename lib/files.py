@@ -1,5 +1,6 @@
 from json import dump
 from os import makedirs, path as osPath
+from shutil import copy
 from lib.i_o import choice, ask
 from lib._private import getLicense, request, removeHtml
 
@@ -81,3 +82,8 @@ def addLicense(path: str = "", content: str = None):
 	else:
 		licenseContent = licenses.getLicense(content)
 	makeFile(osPath.join(path, "LICENSE"), licenseContent.content)
+def copyFile(ressource_path: str, new_path: str):
+	"""
+	Copy a file from a path in the assets folder to another
+	"""
+	copy(osPath.join(getPath(osPath.dirname(__file__)), "assets", ressource_path), new_path)

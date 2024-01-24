@@ -18,7 +18,7 @@ try:
 	while isdir(path):
 		templateName = path.replace(f'{defaultFolder}/','',1)
 		files = listdir(osPath.join(getPath(__file__), path))
-		removeInList(files,["__scripts","__pycache__"])
+		removeInList(files,["__scripts","__assets","__pycache__"])
 		files = [file.removesuffix(".py") for file in files]
 
 		cls()
