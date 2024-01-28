@@ -1,6 +1,6 @@
-from lib.files import addLicense, makeJson, makeTree
+from lib.files import addLicense, makeFile, makeJson, makeTree
 from lib.i_o import getData
-from os import chdir, system
+from os import chdir, name, system
 
 data = getData().getDatapackName().getNamespace().getMcVersion()
 data.author = "Rignchen"
@@ -70,21 +70,32 @@ makeTree({
 				"scoreboard players reset * load.status"
 			]
 		},
-		".gitignore": ".vscode\n",
-		"zip_pack.bat": [
-			"@echo off",
-			'zip -i "pack.mcmeta", "data", "LICENSE", "README.md" -e "__pycache__"',
-			"exit /b"
-		]
+		".gitignore": ".vscode\n"
 	}
 })
 
 chdir(data.datapackName)
 system("git init")
 
+#zip script
+if name == "nt": # windows
+	makeFile(
+		"zip_pack.bat",
+		[
+			"@echo off",
+			'zip -i "pack.mcmeta", "data", "LICENSE.md", "README.md" -e "__pycache__"',
+			"exit /b"
+		]
+	)
+else: # linux
+	makeFile(
+		"zip_pack.bs",
+		'zip -i "pack.mcmeta", "data", "LICENSE.md", "README.md" -e "__pycache__"'
+	)
+
 makeJson( # .vscode/settings.json
 	".vscode/settings.json",
-	{"files.exclude": {"data/global":True, "data/minecraft":True, "data/load/functions": True, "data/load/tags/functions/_private": True, "LICENSE":True, "pack.mcmeta": True}}
+	{"files.exclude": {"data/global":True, "data/minecraft":True, "data/load/functions": True, "data/load/tags/functions/_private": True, "LICENSE.md":True, "pack.mcmeta": True, "zip_pack.*": True}}
 )
 makeJson( # pack.mcmeta
 	"pack.mcmeta",
