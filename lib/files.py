@@ -81,7 +81,7 @@ def addLicense(path: str = "", content: str = None):
 	# the license is imposed by the template
 	else:
 		licenseContent = licenses.getLicense(content)
-	makeFile(osPath.join(path, "LICENSE"), licenseContent.content)
+	makeFile(osPath.join(path, "LICENSE.md"), licenseContent.content)
 def copyFile(ressource_path: str, new_path: str):
 	"""
 	Copy a file from a path in the assets folder to another
