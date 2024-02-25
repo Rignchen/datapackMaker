@@ -1,4 +1,4 @@
-from lib._private import correctChoiceErrorCheck
+from lib._private import _correctChoiceErrorCheck
 from os import name as osName, system
 
 ## Input
@@ -49,7 +49,7 @@ def choice(text:str, choices: list[str], errorFunction: callable = lambda x,y: N
 	for i, choice in enumerate(choices):
 		print(f"{i+1}. {choice}")
 
-	correctedErrorFunction = lambda x,y: correctChoiceErrorCheck(x,y,errorFunction)
+	correctedErrorFunction = lambda x,y: _correctChoiceErrorCheck(x,y,errorFunction)
 
 	ans = inputIn(text, [str(i+1) for i in range(len(choices))], correctedErrorFunction)
 

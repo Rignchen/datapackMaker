@@ -2,7 +2,7 @@ from json import dump
 from os import makedirs, path as osPath
 from shutil import copy
 from lib.i_o import choice, ask
-from lib._private import request 
+from lib._private import _request 
 
 def getPath(path:str):
 	"""
@@ -60,7 +60,7 @@ def addLicense(content: str|None = None, path: str = "LICENSE"):
 	- Mozilla Public License 2.0
 	- The Unlicense
 	"""
-	licenses = {r["name"]: r["url"] for r in request("https://api.github.com/licenses")}
+	licenses = {r["name"]: r["url"] for r in _request("https://api.github.com/licenses")}
 	licenseNames = [l for l in licenses]
 	if content is None:
 		content: int|str = choice(
@@ -70,7 +70,7 @@ def addLicense(content: str|None = None, path: str = "LICENSE"):
 		if isinstance(content, int): content = licenseNames[content]
 	if content == "": return
 	if content in licenseNames:
-		content: dict[str,str] = request(licenses[content])["body"]
+		content: dict[str,str] = _request(licenses[content])["body"]
 	elif len(content):
 		content = content
 	makeFile(path, content)
