@@ -9,15 +9,16 @@ def removeInList(array: list, values: list):
 		if value in array: array.remove(value)
 	return array
 
-defaultFolder = "template_type"
+file_position = getPath(__file__)
+defaultFolder = osPath.join(file_position + "template_type")
 
 cls()
 path = defaultFolder
 
 try:
 	while isdir(path):
-		templateName = path.replace(f'{defaultFolder}/','',1)
-		files = listdir(osPath.join(getPath(__file__), path))
+		templateName = path.removeprefix(f'{defaultFolder}')[1:]
+		files = listdir(path)
 		removeInList(files,["__scripts","__assets","__pycache__"])
 		files = [file.removesuffix(".py") for file in files]
 
@@ -48,9 +49,9 @@ try:
 					break
 				if len(listdir(path)) > 1: break
 
-	templateName = path.replace(f'{defaultFolder}/','',1)
+	templateName = path.removeprefix(f'{defaultFolder}')[1:].replace("\\","/")
 	print(f"template chosen: {templateName}\n")
 
-	import_module(path.replace('/','.')) # run the selected script
+	import_module(path.removeprefix(file_position).replace('\\','.').replace('/','.')) # run the selected script
 except KeyboardInterrupt:
 	print("\nCancel")
