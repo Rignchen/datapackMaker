@@ -2,7 +2,7 @@ from json import dump
 from os import makedirs, path as osPath
 from shutil import copy
 from lib.i_o import choice, ask
-from lib._private import getLicense, request, removeHtml
+from lib._private import request 
 
 def getPath(path:str):
 	"""
@@ -40,7 +40,7 @@ def makeTree(tree: dict[str|dict[str,str]], path: str = ""):
 			makeTree(content, new_path)
 		elif isinstance(content, (str, list)):
 			makeFile(new_path,content)
-def addLicense(path: str = "", content: str = None):
+def addLicense(content: str|None = None, path: str = "LICENSE"):
 	"""
 	Add a licence in the root of the project\n
 	When the content isn't specified, the user will be asked to choose a license otherswise, the license can also be imposed by the template.\n
@@ -60,28 +60,21 @@ def addLicense(path: str = "", content: str = None):
 	- Mozilla Public License 2.0
 	- The Unlicense
 	"""
-	licenses = getLicense({r["name"]: r["url"] for r in request("https://api.github.com/licenses")})
-	licenseNames = [l for l in licenses.licenseList]
-	if content == None:
-		errorFunction = lambda x,y: x if len(x) > 0 and x[0].isalpha() else (x if x == "0" else None)
-		while True:
-			print("Choose a licence or write the content of the licence you want. Enter 0 if you don't want any license:")
-			license = choice("", licenseNames, errorFunction)
+	licenses = {r["name"]: r["url"] for r in request("https://api.github.com/licenses")}
+	licenseNames = [l for l in licenses]
+	if content is None:
+		content: int|str = choice(
+			"Choose a licence or write the content of the licence you want. Enter 0 if you don't want any license:", 
+			licenseNames, 
+			lambda x,y: x if len(x) > 0 and x[0].isalpha() else ("" if x == "0" and ask("You chose not to have a license, are you sure?") else None))
+		if isinstance(content, int): content = licenseNames[content]
+	if content == "": return
+	if content in licenseNames:
+		content: dict[str,str] = request(licenses[content])["body"]
+	elif len(content):
+		content = content
+	makeFile(path, content)
 
-			if license == "0":
-				if ask("You chose not to have a license, are you sure?"):
-					return
-			elif isinstance(license, str):
-				licenseContent = licenses.getLicense(license)
-				break
-			else:
-				licenseContent = licenses.getLicense(licenseNames[license])
-				if ask(f"You chose the {licenseContent.name} license wich is:\n {removeHtml(licenseContent.description)}\nDo you want to keep it?"):
-					break
-	# the license is imposed by the template
-	else:
-		licenseContent = licenses.getLicense(content)
-	makeFile(osPath.join(path, "LICENSE.md"), licenseContent.content)
 def copyFile(ressource_path: str, new_path: str):
 	"""
 	Copy a file from a path in the assets folder to another
