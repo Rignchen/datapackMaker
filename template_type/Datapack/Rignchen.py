@@ -134,7 +134,7 @@ makeJson( # load.json
 )
 makeJson( # tick.json
 	f"data/minecraft/tags/functions/tick.json",
-	{"values": [f"{data.namespace}:tick"]}
+	{"values": [{"id": f"{data.namespace}:tick", "required": False}]}
 )
 #ns
 makeJson( # loot table/i.json
