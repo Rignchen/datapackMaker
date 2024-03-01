@@ -71,7 +71,8 @@ makeTree({
 			]
 		},
 		".gitignore": ".vscode\n"
-	}
+	},
+	"README.md": f"# {data.datapackName}\n\n## Installation\n1. Download the datapack\n2. Place the datapack in the `datapacks` folder of your world\n3. Run `/reload` or restart your world\n4. Enjoy!\n\n## Uninstallation\n1. Run `/function {data.namespace}:unload`\n2. Remove the datapack from the `datapacks` folder of your world\n\n## Usage\n"
 })
 
 chdir(data.datapackName)
@@ -83,14 +84,14 @@ if name == "nt": # windows
 		"zip_pack.bat",
 		[
 			"@echo off",
-			'zip -i "pack.mcmeta", "data", "LICENSE.md", "README.md" -e "__pycache__"',
+			'zip -i "pack.mcmeta", "data\\", "LICENSE.md", "README.md" -e "__pycache__"',
 			"exit /b"
 		]
 	)
 else: # linux
 	makeFile(
 		"zip_pack.bs",
-		'zip -i "pack.mcmeta", "data", "LICENSE.md", "README.md" -e "__pycache__"'
+		'zip -i "pack.mcmeta", "data/", "LICENSE.md", "README.md" -e "__pycache__"'
 	)
 
 makeJson( # .vscode/settings.json

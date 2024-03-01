@@ -40,7 +40,7 @@ def makeTree(tree: dict[str|dict[str,str]], path: str = ""):
 			makeTree(content, new_path)
 		elif isinstance(content, (str, list)):
 			makeFile(new_path,content)
-def addLicense(content: str|None = None, path: str = "LICENSE"):
+def addLicense(content: str|None = None, path: str = "LICENSE.md"):
 	"""
 	Add a licence in the root of the project\n
 	When the content isn't specified, the user will be asked to choose a license otherswise, the license can also be imposed by the template.\n
