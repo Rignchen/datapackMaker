@@ -58,38 +58,29 @@ def choice(text: str, choices: list[str], errorFunction: callable = lambda x, y:
 	return int(ans) - 1 if isinstance(ans, str) else ans[0]
 class getData():
 	"""
-	Ask the user for data requiered to make a datapack
+	Ask the user for data requiered to make a new project
 	"""
 	def __init__(self):
 		"""
-		Ask the user for data requiered to make a datapack
+		Ask the user for data requiered to make a project
 		"""
-	def getDatapackName(self):
+	def getName(self):
 		"""
-		Get the name of the datapack
+		Get the name of the project
 		"""
-		self.datapackName = askDefault("What's the name of the pack? ")
+		self.name = askDefault("What's the name of the project? ")
 		return self
-	def getNamespace(self):
+	def getDescription(self):
 		"""
-		Get the namespace of the datapack
+		Get a small description for the project
 		"""
-		self.namespace = askDefault("What's the namespace of the pack? ").lower().replace(" ", "_")
-		return self
-	def getMcVersion(self):
-		"""
-		Get the Minecraft version
-		"""
-		mcVersion = ""
-		while not (len(mcVersion) > 0 and mcVersion.isdigit() and int(mcVersion) >= 4):
-			mcVersion = input("For wich version is it made? ")
-		self.mcVersion = int(mcVersion)
+		self.description = input("Can you give a small description of your project?\n")
 		return self
 	def getVersion(self):
 		"""
-		Get the version of the datapack
+		Get the version of the project
 		"""
-		self.version = askDefault("What's the version of the pack? ", "1.0.0")
+		self.version = askDefault("What's the version of the project? ", "1.0.0")
 		if "." in self.version:
 			self.version = self.version.split(".")
 			if len(self.version) < 3:
@@ -110,7 +101,7 @@ class getData():
 			default = None
 		self.author = askDefault("Who's the author of this datapack? ", default)
 		return self
-	def getMcName(self):
+	def dpGetMcName(self):
 		"""
 		Get the minecraft username of the author
 		"""
@@ -119,6 +110,21 @@ class getData():
 		except:
 			default = None
 		self.mcName = askDefault("What's the minecraft username of the author? ", default)
+		return self
+	def dpGetNamespace(self):
+		"""
+		Get the namespace of the datapack
+		"""
+		self.namespace = askDefault("What's the namespace of the datapack? ").lower().replace(" ", "_")
+		return self
+	def dpGetMcVersion(self):
+		"""
+		Get the Minecraft pack version
+		"""
+		mcVersion = ""
+		while not (len(mcVersion) > 0 and mcVersion.isdigit() and int(mcVersion) >= 4):
+			mcVersion = input("For wich pack version is it made? ")
+		self.mcVersion = int(mcVersion)
 		return self
 
 ## Output

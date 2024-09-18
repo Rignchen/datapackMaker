@@ -4,19 +4,19 @@ from lib.i_o import getData
 data = getData().getName().dpGetNamespace().dpGetMcVersion().getAuthor()
 
 makeJson(
-	f"{data.datapackName}/pack.mcmeta",
-	{"pack":{"pack_format": data.mcVersion, "description": f"{data.datapackName} by {data.author}"}}
+	f"{data.name}/pack.mcmeta",
+	{"pack":{"pack_format": data.mcVersion, "description": f"{data.name} by {data.author}"}}
 )
 makeJson(
-	f"{data.datapackName}/data/minecraft/tags/functions/load.json",
+	f"{data.name}/data/minecraft/tags/functions/load.json",
 	{"values": [f"{data.namespace}:load"]}
 )
 makeJson(
-	f"{data.datapackName}/data/minecraft/tags/functions/tick.json",
+	f"{data.name}/data/minecraft/tags/functions/tick.json",
 	{"values": [f"{data.namespace}:tick"]}
 )
-makeFile(f"{data.datapackName}/data/{data.namespace}/functions/tick.mcfunction", "")
-makeFile(f"{data.datapackName}/data/{data.namespace}/functions/load.mcfunction", [f"say the {data.datapackName} Datapack successfully loaded!"])
+makeFile(f"{data.name}/data/{data.namespace}/functions/tick.mcfunction", "")
+makeFile(f"{data.name}/data/{data.namespace}/functions/load.mcfunction", [f"say the {data.name} Datapack successfully loaded!"])
 
 addLicense()
 
@@ -58,4 +58,4 @@ for ns in ["minecraft", data.namespace]:
 			"world_preset": {},
 			"flat_level_generator_preset": {}
 		}
-	},f"{data.datapackName}/data/{ns}")
+	},f"{data.name}/data/{ns}")

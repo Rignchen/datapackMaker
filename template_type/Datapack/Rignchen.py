@@ -2,12 +2,12 @@ from lib.files import addLicense, makeFile, makeJson, makeTree
 from lib.i_o import getData
 from os import chdir, name, system
 
-data = getData().getDatapackName().getNamespace().getMcVersion()
+data = getData().getName().dpGetNamespace().dpGetMcVersion()
 data.author = "Rignchen"
 data.mcName = "Rignchen"
 
 makeTree({
-	data.datapackName: {
+	data.name: {
 		"data": {
 			data.namespace: {
 				"advancements": {
@@ -47,8 +47,8 @@ makeTree({
 						f"scoreboard objectives remove {data.namespace}.data",
 						"",
 						"#disable the pack",
-						f"datapack disable \"file/{data.datapackName}\"",
-						f"datapack disable \"file/{data.datapackName}.zip\"",
+						f"datapack disable \"file/{data.name}\"",
+						f"datapack disable \"file/{data.name}.zip\"",
 						""
 					]
 				},
@@ -72,10 +72,10 @@ makeTree({
 		},
 		".gitignore": ".vscode\n"
 	},
-	"README.md": f"# {data.datapackName}\n\n## Installation\n1. Download the datapack\n2. Place the datapack in the `datapacks` folder of your world\n3. Run `/reload` or restart your world\n4. Enjoy!\n\n## Uninstallation\n1. Run `/function {data.namespace}:unload`\n2. Remove the datapack from the `datapacks` folder of your world\n\n## Usage\n"
+	"README.md": f"# {data.name}\n\n## Installation\n1. Download the datapack\n2. Place the datapack in the `datapacks` folder of your world\n3. Run `/reload` or restart your world\n4. Enjoy!\n\n## Uninstallation\n1. Run `/function {data.namespace}:unload`\n2. Remove the datapack from the `datapacks` folder of your world\n\n## Usage\n"
 })
 
-chdir(data.datapackName)
+chdir(data.name)
 system("git init")
 
 # zip script
@@ -100,7 +100,7 @@ makeJson(  # .vscode/settings.json
 )
 makeJson(  # pack.mcmeta
 	"pack.mcmeta",
-	{"pack":{"pack_format": data.mcVersion,"description": f"{data.datapackName} by {data.author}"}}
+	{"pack":{"pack_format": data.mcVersion,"description": f"{data.name} by {data.author}"}}
 )
 # global convention
 makeJson(  # root.json
@@ -113,7 +113,7 @@ makeJson(  # author.json
 )
 makeJson(  # ns.json
 	f"data/{data.namespace}/advancements/{data.namespace}.json",
-	{"display": {"icon": {"item": "minecraft:stone"},"title": data.datapackName,"description": "Minecraft DataPack","show_toast": False,"announce_to_chat": False},"parent": f"global:{data.author.lower()}","criteria": {"trigger": {"trigger": "minecraft:tick"}}}
+	{"display": {"icon": {"item": "minecraft:stone"}, "title": data.name, "description": "Minecraft DataPack", "show_toast": False, "announce_to_chat": False}, "parent": f"global:{data.author.lower()}", "criteria": {"trigger": {"trigger": "minecraft:tick"}}}
 )
 # load convention
 makeJson(  # load.json
