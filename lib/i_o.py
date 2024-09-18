@@ -97,7 +97,7 @@ class getData():
 		"""
 		try:
 			default = self.mcName
-		except:
+		except AttributeError:
 			default = None
 		self.author = askDefault("Who's the author of this datapack? ", default)
 		return self
@@ -107,7 +107,7 @@ class getData():
 		"""
 		try:
 			default = self.author
-		except:
+		except AttributeError:
 			default = None
 		self.mcName = askDefault("What's the minecraft username of the author? ", default)
 		return self
@@ -146,3 +146,10 @@ class color():
 	red = '\033[91m'
 	bold = '\033[1m'
 	underline = '\033[4m'
+def run(commands: list[str]):
+	"""
+	Run a list of commands
+	"""
+	for command in commands:
+		system(command)
+
