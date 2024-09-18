@@ -1,11 +1,11 @@
 from lib.files import addLicense, makeFile, makeJson, makeTree
 from lib.i_o import getData
 
-data = getData().getDatapackName().getNamespace().getMcVersion().getAuthor()
+data = getData().getName().dpGetNamespace().dpGetMcVersion().getAuthor()
 
 makeJson(
 	f"{data.datapackName}/pack.mcmeta",
-	{"pack":{"pack_format": data.mcVersion,"description": f"{data.datapackName} by {data.author}"}}
+	{"pack":{"pack_format": data.mcVersion, "description": f"{data.datapackName} by {data.author}"}}
 )
 makeJson(
 	f"{data.datapackName}/data/minecraft/tags/functions/load.json",
@@ -20,7 +20,7 @@ makeFile(f"{data.datapackName}/data/{data.namespace}/functions/load.mcfunction",
 
 addLicense()
 
-for ns in ["minecraft",data.namespace]:
+for ns in ["minecraft", data.namespace]:
 	makeTree({
 		"advancements": {},
 		"functions": {},

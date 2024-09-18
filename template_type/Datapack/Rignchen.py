@@ -78,8 +78,8 @@ makeTree({
 chdir(data.datapackName)
 system("git init")
 
-#zip script
-if name == "nt": # windows
+# zip script
+if name == "nt":  # windows
 	makeFile(
 		"zip_pack.bat",
 		[
@@ -88,57 +88,57 @@ if name == "nt": # windows
 			"exit /b"
 		]
 	)
-else: # linux
+else:  # linux
 	makeFile(
 		"zip_pack.bs",
 		'zip -i "pack.mcmeta", "data/", "LICENSE.md", "README.md" -e "__pycache__"'
 	)
 
-makeJson( # .vscode/settings.json
+makeJson(  # .vscode/settings.json
 	".vscode/settings.json",
 	{"files.exclude": {"data/global":True, "data/minecraft":True, "data/load/functions": True, "data/load/tags/functions/_private": True, "LICENSE.md":True, "pack.mcmeta": True, "zip_pack.*": True}}
 )
-makeJson( # pack.mcmeta
+makeJson(  # pack.mcmeta
 	"pack.mcmeta",
 	{"pack":{"pack_format": data.mcVersion,"description": f"{data.datapackName} by {data.author}"}}
 )
-#global convention
-makeJson( # root.json
+# global convention
+makeJson(  # root.json
 	"data/global/advancements/root.json",
 	{"display": {"title": "Installed Datapacks","description": "","icon": {"item": "minecraft:knowledge_book"},"background": "minecraft:textures/block/gray_concrete.png","show_toast": False,"announce_to_chat": False},"criteria": {"trigger": {"trigger": "minecraft:tick"}}}
 )
-makeJson( # author.json
+makeJson(  # author.json
 	f"data/global/advancements/{data.author.lower()}.json",
 	{"display": {"title": data.author,"description": "","icon": {"item": "minecraft:player_head","nbt": "{SkullOwner:" + data.mcName + "}"},"show_toast": False,"announce_to_chat": False},"parent": "global:root","criteria": {"trigger": {"trigger": "minecraft:tick"}}}
 )
-makeJson( # ns.json
+makeJson(  # ns.json
 	f"data/{data.namespace}/advancements/{data.namespace}.json",
 	{"display": {"icon": {"item": "minecraft:stone"},"title": data.datapackName,"description": "Minecraft DataPack","show_toast": False,"announce_to_chat": False},"parent": f"global:{data.author.lower()}","criteria": {"trigger": {"trigger": "minecraft:tick"}}}
 )
-#load convention
-makeJson( # load.json
+# load convention
+makeJson(  # load.json
 	f"data/load/tags/functions/load.json",
 	{"values": [f"{data.namespace}:load"]}
 )
-makeJson( # init.json
+makeJson(  # init.json
 	f"data/load/tags/functions/_private/init.json",
 	{"values": ["load:_private/init"]}
 )
-makeJson( # load.json
+makeJson(  # load.json
 	f"data/load/tags/functions/_private/load.json",
 	{"values": ["#load:_private/init",{"id": "#load:pre_load", "required": False},{"id": "#load:load", "required": False},{"id": "#load:post_load", "required": False}]}
 )
-#minecraft
-makeJson( # load.json
+# minecraft
+makeJson(  # load.json
 	f"data/minecraft/tags/functions/load.json",
 	{"values": ["#load:_private/load"]}
 )
-makeJson( # tick.json
+makeJson(  # tick.json
 	f"data/minecraft/tags/functions/tick.json",
 	{"values": [{"id": f"{data.namespace}:tick", "required": False}]}
 )
-#ns
-makeJson( # loot table/i.json
+# ns
+makeJson(  # loot table/i.json
 	f"data/{data.namespace}/loot_tables/i/.json",
 	{"pools": [{"rolls": 1,"entries": [{"type": "item","name": "","functions": [{"function": "copy_nbt","ops": [{"op": "merge","source": "data..tag","target": "{}"}],"source": {"type": "storage","source": f"{data.namespace}:items"}}]}]}]}
 )
@@ -232,6 +232,6 @@ For the avoidance of doubt, this Section [6(b)](#section-6--term-and-termination
 3. No term or condition of this Public License will be waived and no failure to comply consented to unless expressly agreed to by the Licensor.
 4. Nothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.""")
 
-#commit
+# commit
 system("git add .")
 system("git commit -m \"Create new datapack\"")

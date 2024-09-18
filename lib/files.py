@@ -2,9 +2,9 @@ from json import dump
 from os import makedirs, path as osPath
 from shutil import copy
 from lib.i_o import choice, ask
-from lib._private import _request 
+from lib._private import _request
 
-def getPath(path:str):
+def getPath(path: str):
 	"""
 	Get the path of the folder where a file is stored
 	"""
@@ -28,7 +28,7 @@ def makeJson(path: str, content: dict):
 	makeFolder(getPath(path))
 	with open(path, "w+") as f:
 		dump(content, f, indent="\t")
-def makeTree(tree: dict[str|dict[str,str]], path: str = ""):
+def makeTree(tree: dict[str|dict[str, str]], path: str = ""):
 	"""
 	Make the folders, subfolders and files as set in the dictionary
 	"""
@@ -39,7 +39,7 @@ def makeTree(tree: dict[str|dict[str,str]], path: str = ""):
 			makeFolder(new_path)
 			makeTree(content, new_path)
 		elif isinstance(content, (str, list)):
-			makeFile(new_path,content)
+			makeFile(new_path, content)
 def addLicense(content: str|None = None, path: str = "LICENSE.md"):
 	"""
 	Add a licence in the root of the project\n
@@ -61,16 +61,16 @@ def addLicense(content: str|None = None, path: str = "LICENSE.md"):
 	- The Unlicense
 	"""
 	licenses = {r["name"]: r["url"] for r in _request("https://api.github.com/licenses")}
-	licenseNames = [l for l in licenses]
+	licenseNames = [li for li in licenses]
 	if content is None:
 		content: int|str = choice(
-			"Choose a licence or write the content of the licence you want. Enter 0 if you don't want any license:", 
-			licenseNames, 
-			lambda x,y: x if len(x) > 0 and x[0].isalpha() else ("" if x == "0" and ask("You chose not to have a license, are you sure?") else None))
+			"Choose a licence or write the content of the licence you want. Enter 0 if you don't want any license:",
+			licenseNames,
+			lambda x, y: x if len(x) > 0 and x[0].isalpha() else ("" if x == "0" and ask("You chose not to have a license, are you sure?") else None))
 		if isinstance(content, int): content = licenseNames[content]
 	if content == "": return
 	if content in licenseNames:
-		content: dict[str,str] = _request(licenses[content])["body"]
+		content: dict[str, str] = _request(licenses[content])["body"]
 	elif len(content):
 		content = content
 	makeFile(path, content)
